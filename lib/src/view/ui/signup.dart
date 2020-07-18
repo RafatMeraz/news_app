@@ -1,22 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/src/view/ui/signup.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 
-class SignIn extends StatefulWidget {
+class SignUp extends StatefulWidget {
   @override
-  _SignInState createState() => _SignInState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _SignInState extends State<SignIn> {
-  TextEditingController _emailController, _passwordController;
+class _SignUpState extends State<SignUp> {
+  TextEditingController _userNameController, _emailController, _passwordController, _confirmPasswordController;
 
   @override
   void initState() {
     super.initState();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _userNameController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
   }
 
   @override
@@ -24,6 +25,8 @@ class _SignInState extends State<SignIn> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _userNameController.dispose();
+    _confirmPasswordController.dispose();
   }
 
   @override
@@ -42,10 +45,10 @@ class _SignInState extends State<SignIn> {
               child: Text(
                 'News App',
                 style: TextStyle(
-                  color: kWhiteColor,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
-                  fontSize: 30
+                    color: kWhiteColor,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                    fontSize: 30
                 ),
               ),
             ),
@@ -90,7 +93,7 @@ class _SignInState extends State<SignIn> {
                         height: 30,
                       ),
                       Text(
-                        'Sign In',
+                        'Sign Up',
                         style: TextStyle(
                             color: kSoftBlackColor,
                             fontWeight: FontWeight.bold,
@@ -100,6 +103,17 @@ class _SignInState extends State<SignIn> {
                       ),
                       SizedBox(
                         height: 40,
+                      ),
+                      InputTextField(
+                        obscureText: false,
+                        hint: 'Username',
+                        iconData: Icons.person_outline,
+                        textEditingController: _userNameController,
+                        textInputType: TextInputType.text,
+                        forgotFunction: null,
+                      ),
+                      SizedBox(
+                        height: 20,
                       ),
                       InputTextField(
                         obscureText: false,
@@ -118,32 +132,39 @@ class _SignInState extends State<SignIn> {
                         iconData: Icons.lock,
                         textEditingController: _passwordController,
                         textInputType: TextInputType.text,
-                        forgotFunction: (){
-                          print('Tapped');
-                        },
+                        forgotFunction: null,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InputTextField(
+                        obscureText: true,
+                        hint: 'Confirm Password',
+                        iconData: Icons.lock,
+                        textEditingController: _confirmPasswordController,
+                        textInputType: TextInputType.text,
+                        forgotFunction: null,
                       ),
                       SizedBox(
                         height: 25,
                       ),
                       RoundedButton(
                         onPressed: (){},
-                        buttonText: 'Sign In',
+                        buttonText: 'Sign Up',
                       ),
                       SizedBox(
                         height: 35,
                       ),
                       InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => SignUp()
-                          ));
+                          Navigator.pop(context);
                         },
                         child: Text(
-                          'Create a new account',
+                          'Already have an account',
                           style: TextStyle(
-                            color: kDarkBlueColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold
+                              color: kDarkBlueColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold
                           ),
                         ),
                       ),
@@ -155,7 +176,7 @@ class _SignInState extends State<SignIn> {
                         style: TextStyle(
                             color: kDarkBlueColor,
                             fontSize: 12,
-                          fontStyle: FontStyle.italic
+                            fontStyle: FontStyle.italic
                         ),
                       ),
                     ],
@@ -169,5 +190,3 @@ class _SignInState extends State<SignIn> {
     );
   }
 }
-
-
