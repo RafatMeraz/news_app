@@ -18,8 +18,11 @@ class InputTextField extends StatelessWidget {
       keyboardType: textInputType,
       decoration: InputDecoration(
         hintText: '$hint',
+        fillColor: kTextFieldBgColor,
         prefixIcon: Icon(iconData),
-        border: OutlineInputBorder(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40),
+        ),
         labelText: '$hint',
         suffix: obscureText == true ? InkWell(
           onTap: forgotFunction,
@@ -34,6 +37,30 @@ class InputTextField extends StatelessWidget {
       ),
       obscureText: obscureText,
       controller: textEditingController,
+    );
+  }
+}
+
+class RoundedButton extends StatelessWidget {
+  RoundedButton({@required this.buttonText, @required this.onPressed});
+
+  final String buttonText;
+  final Function onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: RaisedButton(
+        color: kDarkGreenColor,
+        padding: EdgeInsets.symmetric(vertical: 15),
+        child: Container(
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width,
+            child: Text('$buttonText', style: TextStyle(color: kWhiteColor, fontSize: 20),)
+        ),
+        onPressed: onPressed,
+      ),
     );
   }
 }

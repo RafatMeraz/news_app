@@ -6,3 +6,4 @@ const Color kWhiteColor = Color(0xFFFFFFFF);
 const Color kSoftBlackColor = Color(0xFF424242);
 const Color kBlackColor = Color(0xFF1b1b1b);
 const Color kDarkBlueColor = Color(0xFF15537D);
+const Color kTextFieldBgColor = Color(0xFFE0F2EA);

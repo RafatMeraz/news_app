@@ -124,17 +124,9 @@ class _SignInState extends State<SignIn> {
                       SizedBox(
                         height: 25,
                       ),
-                      RaisedButton(
-                        color: kDarkGreenColor,
-                        padding: EdgeInsets.symmetric(vertical: 15),
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width,
-                            child: Text('Sign In', style: TextStyle(color: kWhiteColor, fontSize: 20),)
-                        ),
-                        onPressed: (){
-
-                        },
+                      RoundedButton(
+                        onPressed: (){},
+                        buttonText: 'Sign In',
                       ),
                       SizedBox(
                         height: 35,
@@ -169,4 +161,5 @@ class _SignInState extends State<SignIn> {
     );
   }
 }
+
 
