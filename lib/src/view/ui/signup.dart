@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/src/view/ui/home.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 
@@ -107,7 +108,7 @@ class _SignUpState extends State<SignUp> {
                       InputTextField(
                         obscureText: false,
                         hint: 'Username',
-                        iconData: Icons.person_outline,
+                        iconData: Icons.person,
                         textEditingController: _userNameController,
                         textInputType: TextInputType.text,
                         forgotFunction: null,
@@ -149,7 +150,11 @@ class _SignUpState extends State<SignUp> {
                         height: 25,
                       ),
                       RoundedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => Home()
+                          ));
+                        },
                         buttonText: 'Sign Up',
                       ),
                       SizedBox(

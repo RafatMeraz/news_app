@@ -4,6 +4,8 @@ import 'package:news_app/src/view/ui/signup.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 
+import 'home.dart';
+
 class SignIn extends StatefulWidget {
   @override
   _SignInState createState() => _SignInState();
@@ -126,7 +128,11 @@ class _SignInState extends State<SignIn> {
                         height: 25,
                       ),
                       RoundedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => Home()
+                          ));
+                        },
                         buttonText: 'Sign In',
                       ),
                       SizedBox(
