@@ -1,32 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/src/view/ui/forgot_password.dart';
-import 'package:news_app/src/view/ui/signup.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 
-import 'home.dart';
-
-class SignIn extends StatefulWidget {
+class ForgotPassword extends StatefulWidget {
   @override
-  _SignInState createState() => _SignInState();
+  _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
-class _SignInState extends State<SignIn> {
-  TextEditingController _emailController, _passwordController;
+class _ForgotPasswordState extends State<ForgotPassword> {
+  TextEditingController _emailController;
 
   @override
   void initState() {
     super.initState();
     _emailController = TextEditingController();
-    _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
-    _passwordController.dispose();
   }
 
   @override
@@ -45,10 +38,10 @@ class _SignInState extends State<SignIn> {
               child: Text(
                 'News App',
                 style: TextStyle(
-                  color: kWhiteColor,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
-                  fontSize: 30
+                    color: kWhiteColor,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                    fontSize: 30
                 ),
               ),
             ),
@@ -93,7 +86,7 @@ class _SignInState extends State<SignIn> {
                         height: 30,
                       ),
                       Text(
-                        'Sign In',
+                        'Reset Password',
                         style: TextStyle(
                             color: kSoftBlackColor,
                             fontWeight: FontWeight.bold,
@@ -113,46 +106,27 @@ class _SignInState extends State<SignIn> {
                         forgotFunction: null,
                       ),
                       SizedBox(
-                        height: 20,
-                      ),
-                      InputTextField(
-                        obscureText: true,
-                        hint: 'Password',
-                        iconData: Icons.lock,
-                        textEditingController: _passwordController,
-                        textInputType: TextInputType.text,
-                        forgotFunction: (){
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => ForgotPassword()
-                          ));
-                        },
-                      ),
-                      SizedBox(
                         height: 25,
                       ),
                       RoundedButton(
                         onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => Home()
-                          ));
+                          print('Send mail!');
                         },
-                        buttonText: 'Sign In',
+                        buttonText: 'Send Email',
                       ),
                       SizedBox(
                         height: 35,
                       ),
                       InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => SignUp()
-                          ));
+                          Navigator.pop(context);
                         },
                         child: Text(
-                          'Create a new account',
+                          'Back to Sign In',
                           style: TextStyle(
-                            color: kDarkBlueColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold
+                              color: kDarkBlueColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold
                           ),
                         ),
                       ),
@@ -164,7 +138,7 @@ class _SignInState extends State<SignIn> {
                         style: TextStyle(
                             color: kDarkBlueColor,
                             fontSize: 12,
-                          fontStyle: FontStyle.italic
+                            fontStyle: FontStyle.italic
                         ),
                       ),
                     ],
@@ -178,5 +152,3 @@ class _SignInState extends State<SignIn> {
     );
   }
 }
-
-
