@@ -54,27 +54,6 @@ class FirebaseAuthService {
     }
   }
 
-
-  // Firebase sign up method
-  Future<bool> userSignUp(String email, String password, String userName) {
-    FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password)
-        .then((value){
-           if (value.user != null){
-             Firestore.instance.collection(USER_DATA).document(value.user.uid).setData({
-               'username' : userName,
-               'email' : email,
-               'uid' : value.user.uid
-             }).catchError((onError){
-               return false;
-             }).whenComplete(() {
-               return true;
-             });
-           }
-      }
-    ).catchError((onError){
-      return false;
-    });
-  }
   
   // Firebase sign in method
   Future<bool> userSignIn(String email, String password) async {
@@ -82,6 +61,7 @@ class FirebaseAuthService {
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       return true;
     } catch (error){
+      errorMessage = error.toString();
       return false;
     }
   }
