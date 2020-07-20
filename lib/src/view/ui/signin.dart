@@ -1,5 +1,10 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/signin/signin_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/signin/signin_events.dart';
+import 'package:news_app/src/business_logic/blocs/signin/signin_states.dart';
 import 'package:news_app/src/view/ui/forgot_password.dart';
 import 'package:news_app/src/view/ui/signup.dart';
 import 'package:news_app/src/view/utils/constants.dart';
@@ -31,6 +36,15 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+
+    BlocProvider.of<SignInBloc>(context).listen((state) {
+      if (state is SignInSuccessState){
+        print('---------------------- signIn success ------------------');
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>
+            Home()));
+      }
+    });
+
     return Scaffold(
       backgroundColor: kSoftGreenColor,
       body: SafeArea(
@@ -132,24 +146,68 @@ class _SignInState extends State<SignIn> {
                       SizedBox(
                         height: 25,
                       ),
-                      RoundedButton(
-                        inProgress: false,
-                        disable: false,
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => Home()
-                          ));
+                      BlocBuilder(
+                        bloc: BlocProvider.of<SignInBloc>(context),
+                        builder: (context, state) {
+                          if (state is SignInFailedState){
+                            BotToast.showText(
+                                text: state.message,
+                                contentColor: Colors.red,
+                                textStyle: TextStyle(
+                                    color: Colors.white
+                                )
+                            );
+                          } else if (state is SignInErrorState){
+                            BotToast.showText(
+                                text: 'Something went wrong!',
+                                contentColor: Colors.red,
+                                textStyle: TextStyle(
+                                    color: Colors.white
+                                )
+                            );
+                          }
+                          return RoundedButton(
+                            inProgress: state is SignInLoadingState,
+                            disable: state is SignInLoadingState,
+                            onPressed: (){
+                              bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(_emailController.text.trim());
+                              if (emailValid){
+                                if (_passwordController.text.length > 6){
+                                  BlocProvider.of<SignInBloc>(context).add(SignInOnUserAccount(
+                                      email: _emailController.text.trim(), password: _passwordController.text
+                                  ));
+                                } else {
+                                  BotToast.showText(
+                                      text: 'Password must be more than 6 letters!',
+                                      contentColor: Colors.red,
+                                      textStyle: TextStyle(
+                                          color: Colors.white
+                                      )
+                                  );
+                                }
+                              } else {
+                                BotToast.showText(
+                                    text: 'Enter a valid email!',
+                                    contentColor: Colors.red,
+                                    textStyle: TextStyle(
+                                        color: Colors.white
+                                    )
+                                );
+                              }
+                            },
+                            buttonText: 'Sign In',
+                          );
                         },
-                        buttonText: 'Sign In',
                       ),
                       SizedBox(
                         height: 35,
                       ),
                       InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => SignUp()
-                          ));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUp()));
                         },
                         child: Text(
                           'Create a new account',
