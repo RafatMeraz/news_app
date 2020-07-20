@@ -98,6 +98,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         height: 40,
                       ),
                       InputTextField(
+                        forgotOption: false,
                         obscureText: false,
                         hint: 'Email',
                         iconData: Icons.email,
@@ -109,6 +110,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         height: 25,
                       ),
                       RoundedButton(
+                        disable: false,
+                        inProgress: false,
                         onPressed: (){
                           print('Send mail!');
                         },

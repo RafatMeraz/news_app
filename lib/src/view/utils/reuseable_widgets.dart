@@ -4,13 +4,13 @@ import 'constants.dart';
 
 class InputTextField extends StatelessWidget {
   final String hint;
-  final bool obscureText;
+  final bool obscureText, forgotOption;
   final TextEditingController textEditingController;
   final IconData iconData;
   final TextInputType textInputType;
   final Function forgotFunction;
 
-  InputTextField({@required this.forgotFunction, @required this.textInputType, @required this.hint, @required this.obscureText, @required this.textEditingController, @required this.iconData});
+  InputTextField({@required this.forgotOption,@required this.forgotFunction, @required this.textInputType, @required this.hint, @required this.obscureText, @required this.textEditingController, @required this.iconData});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class InputTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(40),
         ),
         labelText: '$hint',
-        suffix: obscureText == true ? InkWell(
+        suffix: obscureText == true && forgotOption == true? InkWell(
           onTap: forgotFunction,
           child: Text(
             'Forgot?',
@@ -42,8 +42,9 @@ class InputTextField extends StatelessWidget {
 }
 
 class RoundedButton extends StatelessWidget {
-  RoundedButton({@required this.buttonText, @required this.onPressed});
+  RoundedButton({@required this.buttonText, @required this.onPressed, @required this.inProgress, @required this.disable});
 
+  final bool inProgress, disable;
   final String buttonText;
   final Function onPressed;
 
@@ -57,9 +58,9 @@ class RoundedButton extends StatelessWidget {
         child: Container(
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width,
-            child: Text('$buttonText', style: TextStyle(color: kWhiteColor, fontSize: 20),)
+            child: inProgress ? CircularProgressIndicator() : Text('$buttonText', style: TextStyle(color: kWhiteColor, fontSize: 20),)
         ),
-        onPressed: onPressed,
+        onPressed: disable ? (){} : onPressed,
       ),
     );
   }

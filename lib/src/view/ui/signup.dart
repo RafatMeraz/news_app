@@ -1,8 +1,14 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/signup/signup_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/signup/signup_events.dart';
+import 'package:news_app/src/business_logic/blocs/signup/signup_states.dart';
 import 'package:news_app/src/view/ui/home.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
+import 'package:toast/toast.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -32,6 +38,15 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+
+    BlocProvider.of<SignUpBloc>(context).listen((state) {
+      if (state is SignUpSuccessState){
+        print('----------------------Logijjsfjs------------------');
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+            Home()), (Route<dynamic> route) => false);
+      }
+    });
+
     return Scaffold(
       backgroundColor: kSoftGreenColor,
       body: SafeArea(
@@ -106,6 +121,7 @@ class _SignUpState extends State<SignUp> {
                         height: 40,
                       ),
                       InputTextField(
+                        forgotOption: false,
                         obscureText: false,
                         hint: 'Username',
                         iconData: Icons.person,
@@ -117,6 +133,7 @@ class _SignUpState extends State<SignUp> {
                         height: 20,
                       ),
                       InputTextField(
+                        forgotOption: false,
                         obscureText: false,
                         hint: 'Email',
                         iconData: Icons.email,
@@ -134,11 +151,13 @@ class _SignUpState extends State<SignUp> {
                         textEditingController: _passwordController,
                         textInputType: TextInputType.text,
                         forgotFunction: null,
+                        forgotOption: false,
                       ),
                       SizedBox(
                         height: 20,
                       ),
                       InputTextField(
+                        forgotOption: false,
                         obscureText: true,
                         hint: 'Confirm Password',
                         iconData: Icons.lock,
@@ -149,13 +168,85 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         height: 25,
                       ),
-                      RoundedButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => Home()
-                          ));
+                      BlocBuilder(
+                        bloc: BlocProvider.of<SignUpBloc>(context),
+                        builder: (context, state){
+                          if (state is SignUpFailedState){
+                            BotToast.showText(
+                                text: state.message,
+                                contentColor: Colors.red,
+                                textStyle: TextStyle(
+                                    color: Colors.white
+                                )
+                            );
+                          } else if (state is SignUpErrorState){
+                            BotToast.showText(
+                                text: 'Something went wrong!',
+                                contentColor: Colors.red,
+                                textStyle: TextStyle(
+                                    color: Colors.white
+                                )
+                            );
+                          } else if (state is SignUpSuccessState){
+//                            Navigator.pop(context);
+//                            Navigator.pushReplacement(context, MaterialPageRoute(
+//                              builder: (context) => Home()
+//                            ));
+                          }
+                          return RoundedButton(
+                            onPressed: (){
+                              bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(_emailController.text.trim());
+                              if (_userNameController.text.trim().isNotEmpty){
+                                if (emailValid){
+                                  if (_passwordController.text.length > 6){
+                                    if (_passwordController.text == _confirmPasswordController.text){
+                                      BlocProvider.of<SignUpBloc>(context).add(SignUpToUserAccount(
+                                          email: _emailController.text.trim(),
+                                          password: _passwordController.text.trim(),
+                                          userName: _userNameController.text.trim()
+                                      ));
+                                    } else {
+                                      BotToast.showText(
+                                          text: 'Both password do not match!',
+                                          contentColor: Colors.red,
+                                          textStyle: TextStyle(
+                                              color: Colors.white
+                                          )
+                                      );
+                                    }
+                                  } else {
+                                    BotToast.showText(
+                                        text: 'Enter a password more than 6 letters!',
+                                        contentColor: Colors.red,
+                                        textStyle: TextStyle(
+                                            color: Colors.white
+                                        )
+                                    );
+                                  }
+                                } else {
+                                  BotToast.showText(
+                                      text: 'Enter a valid email!',
+                                      contentColor: Colors.red,
+                                      textStyle: TextStyle(
+                                          color: Colors.white
+                                      )
+                                  );
+                                }
+                              } else {
+                                BotToast.showText(
+                                    text: 'Enter your full name!',
+                                    contentColor: Colors.red,
+                                    textStyle: TextStyle(
+                                        color: Colors.white
+                                    )
+                                );
+                              }
+                            },
+                            buttonText: 'Sign Up',
+                            inProgress: state is SignUpLoadingState,
+                            disable: state is SignUpLoadingState,
+                          );
                         },
-                        buttonText: 'Sign Up',
                       ),
                       SizedBox(
                         height: 35,

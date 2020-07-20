@@ -8,8 +8,11 @@ import 'package:news_app/src/view/ui/signin.dart';
 const String USER_DATA = 'users';
 
 class FirebaseAuthService {
-  
-  
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final Firestore _firestore = Firestore.instance;
+  FirebaseUser user;
+  String errorMessage;
+
   // check user is logged on or not
   checkUserAuthState() {
     return StreamBuilder(
@@ -22,6 +25,35 @@ class FirebaseAuthService {
           }
         });
   }
+
+  Future<bool> createNewUser(String email, password)async{
+    try {
+      var _authResult = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      if (_authResult != null){
+        user = _authResult.user;
+        return true;
+      }
+    } catch (e){
+      errorMessage = e.toString();
+      return false;
+    }
+  }
+
+  Future<bool> uploadUserData(String email, String uid, String userName)async{
+    try {
+      await _firestore.collection('users').document(uid).setData({
+        'uid': uid,
+        'user_name': userName,
+        'email': email,
+        });
+      return true;
+    } catch (e){
+      errorMessage = e.toString();
+      return false;
+    }
+  }
+
 
   // Firebase sign up method
   Future<bool> userSignUp(String email, String password, String userName) {
@@ -62,5 +94,10 @@ class FirebaseAuthService {
     } catch (error){
       return false;
     }
+  }
+
+  // sign out user
+  userSignOut(){
+    FirebaseAuth.instance.signOut();
   }
 }

@@ -106,6 +106,7 @@ class _SignInState extends State<SignIn> {
                       ),
                       InputTextField(
                         obscureText: false,
+                        forgotOption: false,
                         hint: 'Email',
                         iconData: Icons.email,
                         textEditingController: _emailController,
@@ -116,6 +117,7 @@ class _SignInState extends State<SignIn> {
                         height: 20,
                       ),
                       InputTextField(
+                        forgotOption: true,
                         obscureText: true,
                         hint: 'Password',
                         iconData: Icons.lock,
@@ -131,6 +133,8 @@ class _SignInState extends State<SignIn> {
                         height: 25,
                       ),
                       RoundedButton(
+                        inProgress: false,
+                        disable: false,
                         onPressed: (){
                           Navigator.push(context, MaterialPageRoute(
                               builder: (context) => Home()
