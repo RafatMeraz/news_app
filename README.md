@@ -1,16 +1,22 @@
 # news_app
 
-A new Flutter application.
+News App
 
-## Getting Started
+## Overview
 
-This project is a starting point for a Flutter application.
+This a mobile application that will show the news of the current world. Users can filter news by their needs. They can filter the news by -
+  - Category
+  - Keyword or phrase
+  - Date published 
+  - Source domain name
+  - Source name
+  - Language
+I am also adding the recent Corona update section. In this feature users can see the current number of Corona affected, deaths & Recovered patients. Users can Sign In or Sign Up with an easy approach.
 
-A few resources to get you started if this is your first Flutter project:
+## Technology
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+For this app I am using - 
+  - Flutter
+  - Firebase 
+  
+For the state management I am using flutter_bloc. That is a package that help to implement BLoC pattern.
