@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/src/business_logic/blocs/signin/signin_bloc.dart';
 import 'package:news_app/src/business_logic/blocs/signin/signin_events.dart';
 import 'package:news_app/src/business_logic/blocs/signin/signin_states.dart';
+import 'package:news_app/src/services/firebase_services/auth_services.dart';
 import 'package:news_app/src/view/ui/forgot_password.dart';
 import 'package:news_app/src/view/ui/signup.dart';
 import 'package:news_app/src/view/utils/constants.dart';
@@ -38,10 +39,13 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
 
     BlocProvider.of<SignInBloc>(context).listen((state) {
-      if (state is SignInSuccessState){
-        print('---------------------- signIn success ------------------');
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>
-            Home()));
+      if (state is SignInSuccessState ) {
+        if (FirebaseAuthService.user != null) {
+          print('---------------------- signIn success ------------------');
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) =>
+                  Home()));
+        }
       }
     });
 

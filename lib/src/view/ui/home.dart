@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/signin/signin_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/signin/signin_events.dart';
+import 'package:news_app/src/business_logic/blocs/signin/signin_states.dart';
 import 'package:news_app/src/services/firebase_services/auth_services.dart';
 import 'package:news_app/src/view/ui/signin.dart';
 import 'package:news_app/src/view/utils/constants.dart';
@@ -29,8 +33,8 @@ class Home extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text('Sign Out'),
-              onTap: (){
-                FirebaseAuthService().userSignOut();
+              onTap: () async{
+                await FirebaseAuthService.userSignOut();
                 Navigator.pushReplacement(context, MaterialPageRoute(
                   builder: (context) => SignIn()
                 ));

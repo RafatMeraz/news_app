@@ -144,8 +144,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             );
                           }
                           return RoundedButton(
-                            disable: false,
-                            inProgress: false,
+                            disable: state is ForgotPasswordLoadingState,
+                            inProgress: state is ForgotPasswordLoadingState,
                             onPressed: (){
                               bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(_emailController.text.trim());
                               if (emailValid){

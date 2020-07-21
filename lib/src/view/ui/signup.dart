@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/src/business_logic/blocs/signup/signup_bloc.dart';
 import 'package:news_app/src/business_logic/blocs/signup/signup_events.dart';
 import 'package:news_app/src/business_logic/blocs/signup/signup_states.dart';
+import 'package:news_app/src/services/firebase_services/auth_services.dart';
 import 'package:news_app/src/view/ui/home.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
@@ -40,8 +41,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
 
     BlocProvider.of<SignUpBloc>(context).listen((state) {
-      if (state is SignUpSuccessState){
-        print('----------------------Logijjsfjs------------------');
+      if (state is SignUpSuccessState && FirebaseAuthService.user != null){
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
             Home()), (Route<dynamic> route) => false);
       }
@@ -187,11 +187,6 @@ class _SignUpState extends State<SignUp> {
                                     color: Colors.white
                                 )
                             );
-                          } else if (state is SignUpSuccessState){
-//                            Navigator.pop(context);
-//                            Navigator.pushReplacement(context, MaterialPageRoute(
-//                              builder: (context) => Home()
-//                            ));
                           }
                           return RoundedButton(
                             onPressed: (){

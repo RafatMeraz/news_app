@@ -8,13 +8,14 @@ import 'package:news_app/src/view/ui/signin.dart';
 const String USER_DATA = 'users';
 
 class FirebaseAuthService {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final Firestore _firestore = Firestore.instance;
-  FirebaseUser user;
-  String errorMessage;
+  static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  static final Firestore _firestore = Firestore.instance;
+  static FirebaseUser user;
+  static String errorMessage;
+  static bool userSignIn = false;
 
   // check user is logged on or not
-  checkUserAuthState() {
+  static checkUserAuthState() {
     return StreamBuilder(
         stream: FirebaseAuth.instance.onAuthStateChanged,
         builder: (BuildContext context, snapshot) {
@@ -26,12 +27,13 @@ class FirebaseAuthService {
         });
   }
 
-  Future<bool> createNewUser(String email, password)async{
+  static Future<bool> createNewUser(String email, password)async{
     try {
       var _authResult = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       if (_authResult != null){
         user = _authResult.user;
+        userSignIn = true;
         return true;
       }
     } catch (e){
@@ -40,7 +42,7 @@ class FirebaseAuthService {
     }
   }
 
-  Future<bool> uploadUserData(String email, String uid, String userName)async{
+  static Future<bool> uploadUserData(String email, String uid, String userName)async{
     try {
       await _firestore.collection('users').document(uid).setData({
         'uid': uid,
@@ -56,9 +58,9 @@ class FirebaseAuthService {
 
   
   // Firebase sign in method
-  Future<bool> userSignIn(String email, String password) async {
+  static Future<bool> userSignInAuth(String email, String password) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) => (value != null) ? user = value.user : user = null);
       return true;
     } catch (error){
       errorMessage = error.toString();
@@ -67,7 +69,7 @@ class FirebaseAuthService {
   }
 
   // Firebase forgot password method
-  Future<bool> userForgotPassword(String email) async {
+  static Future<bool> userForgotPassword(String email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       return true;
@@ -78,7 +80,8 @@ class FirebaseAuthService {
   }
 
   // sign out user
-  userSignOut(){
+  static userSignOut(){
     FirebaseAuth.instance.signOut();
+    user = null;
   }
 }
