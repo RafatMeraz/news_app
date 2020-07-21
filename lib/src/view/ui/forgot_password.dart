@@ -1,4 +1,9 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/forgot_password/forgot_password_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/forgot_password/forgot_password_events.dart';
+import 'package:news_app/src/business_logic/blocs/forgot_password/forgot_password_states.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 
@@ -109,13 +114,55 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       SizedBox(
                         height: 25,
                       ),
-                      RoundedButton(
-                        disable: false,
-                        inProgress: false,
-                        onPressed: (){
-                          print('Send mail!');
+                      BlocBuilder(
+                        bloc: BlocProvider.of<ForgotPasswordBloc>(context),
+                        builder: (context, state){
+                          if (state is ForgotPasswordErrorState){
+                            BotToast.showText(
+                                text: 'Something went wrong!',
+                                contentColor: Colors.red,
+                                textStyle: TextStyle(
+                                    color: Colors.white
+                                )
+                            );
+                          } else if (state is ForgotPasswordFailedState){
+                            BotToast.showText(
+                                text: state.message,
+                                contentColor: Colors.red,
+                                textStyle: TextStyle(
+                                    color: Colors.white
+                                )
+                            );
+                          } else if (state is ForgotPasswordSuccessState){
+                            BotToast.showText(
+                                text: "A mail has been sent to your email for reset your password!",
+                                contentColor: kDarkGreenColor,
+                                textStyle: TextStyle(
+                                    color: Colors.white
+                                ),
+                              duration: Duration(seconds: 3)
+                            );
+                          }
+                          return RoundedButton(
+                            disable: false,
+                            inProgress: false,
+                            onPressed: (){
+                              bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(_emailController.text.trim());
+                              if (emailValid){
+                                BlocProvider.of<ForgotPasswordBloc>(context).add(ForgotPasswordResetEvent(email: _emailController.text.trim()));
+                              } else {
+                                BotToast.showText(
+                                    text: 'Enter a valid email!',
+                                    contentColor: Colors.red,
+                                    textStyle: TextStyle(
+                                        color: Colors.white
+                                    )
+                                );
+                              }
+                            },
+                            buttonText: 'Send Email',
+                          );
                         },
-                        buttonText: 'Send Email',
                       ),
                       SizedBox(
                         height: 35,
