@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/src/services/firebase_services/auth_services.dart';
+import 'package:news_app/src/view/ui/signin.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 
 class Home extends StatelessWidget {
@@ -23,6 +25,16 @@ class Home extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.track_changes),
               title: Text('Corona Tracker'),
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app),
+              title: Text('Sign Out'),
+              onTap: (){
+                FirebaseAuthService().userSignOut();
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (context) => SignIn()
+                ));
+              },
             ),
           ],
         ),
