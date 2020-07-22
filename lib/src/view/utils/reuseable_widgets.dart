@@ -112,7 +112,7 @@ class NewsCard extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Chip(
-                        label: Text('$publishedAt', style: TextStyle(color: kWhiteColor, fontSize: 12, fontWeight: FontWeight.w500),),
+                        label: Text('${publishedAt.split("T")[1]+"  "+publishedAt.split("T")[0]}', style: TextStyle(color: kWhiteColor, fontSize: 12, fontWeight: FontWeight.w500),),
                         backgroundColor: kDarkBlueColor,
                       ),
                     ],

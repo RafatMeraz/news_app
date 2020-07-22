@@ -1,7 +1,7 @@
 class NewsModel {
   String status;
   int totalResults;
-  List<Articles> articles;
+  List<Article> articles;
 
   NewsModel({this.status, this.totalResults, this.articles});
 
@@ -9,9 +9,9 @@ class NewsModel {
     status = json['status'];
     totalResults = json['totalResults'];
     if (json['articles'] != null) {
-      articles = new List<Articles>();
+      articles = new List<Article>();
       json['articles'].forEach((v) {
-        articles.add(new Articles.fromJson(v));
+        articles.add(new Article.fromJson(v));
       });
     }
   }
@@ -27,7 +27,7 @@ class NewsModel {
   }
 }
 
-class Articles {
+class Article {
   Source source;
   String author;
   String title;
@@ -37,7 +37,7 @@ class Articles {
   String publishedAt;
   String content;
 
-  Articles(
+  Article(
       {this.source,
         this.author,
         this.title,
@@ -47,7 +47,7 @@ class Articles {
         this.publishedAt,
         this.content});
 
-  Articles.fromJson(Map<String, dynamic> json) {
+  Article.fromJson(Map<String, dynamic> json) {
     source =
     json['source'] != null ? new Source.fromJson(json['source']) : null;
     author = json['author'];

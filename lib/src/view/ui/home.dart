@@ -10,6 +10,8 @@ import 'package:news_app/src/view/ui/signin.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 
+import 'news_details.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -134,7 +136,11 @@ class _HomeState extends State<Home> {
                             publishedAt: state.newsModel.articles[index].publishedAt,
                             imageUrl: state.newsModel.articles[index].urlToImage,
                             description: state.newsModel.articles[index].description,
-                            onTap: (){},
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => NewsDetails(article: state.newsModel.articles[index])
+                              ));
+                            },
                           );
                         }
                     );
