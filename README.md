@@ -1,6 +1,6 @@
 # news_app
 
-News App
+A Flutter application for daily update news.
 
 ## Overview
 
