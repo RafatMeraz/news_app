@@ -1,14 +1,28 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/signin/signin_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/signin/signin_events.dart';
-import 'package:news_app/src/business_logic/blocs/signin/signin_states.dart';
+import 'package:news_app/src/business_logic/blocs/home/home_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/home/home_events.dart';
+import 'package:news_app/src/business_logic/blocs/home/home_states.dart';
 import 'package:news_app/src/services/firebase_services/auth_services.dart';
 import 'package:news_app/src/view/ui/signin.dart';
 import 'package:news_app/src/view/utils/constants.dart';
+import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<HomeBloc>(context).add(HomeGetAllHeadlineEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,70 +118,29 @@ class Home extends StatelessWidget {
           Expanded(
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 16),
-              child: ListView(
-                children: <Widget>[
-                  Card(
-                    elevation: 2,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          width: 150,
-                          height: 150,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/news.jpg',),
-                              fit: BoxFit.cover
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                  'Title will here',
-                                style: TextStyle(
-                                  color: kSoftBlackColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                  'It is a long established fact that',
-                                maxLines: 3,
-                                style: TextStyle(
-                                  color: kSoftBlackColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Chip(
-                                    label: Text('Technology', style: TextStyle(color: kWhiteColor, fontSize: 12, fontWeight: FontWeight.w500),),
-                                    backgroundColor: kDarkBlueColor,
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        )
-
-                      ],
-                    ),
-                  )
-                ],
+              child: BlocBuilder(
+                bloc: BlocProvider.of<HomeBloc>(context),
+                builder: (context, state){
+                  if (state is HomeNewsLoadingState){
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is HomeNewsErrorState){
+                    return Center(child: Text("Something went wring!"),);
+                  } else if (state is HomeNewsFetchedSuccessState){
+                    return ListView.builder(
+                        itemCount: state.newsModel.articles.length,
+                        itemBuilder: (context, index){
+                          return NewsCard(
+                            title: state.newsModel.articles[index].title,
+                            publishedAt: state.newsModel.articles[index].publishedAt,
+                            imageUrl: state.newsModel.articles[index].urlToImage,
+                            description: state.newsModel.articles[index].description,
+                            onTap: (){},
+                          );
+                        }
+                    );
+                  }
+                  return Center(child: CircularProgressIndicator());
+                },
               ),
             ),
           )
@@ -176,3 +149,4 @@ class Home extends StatelessWidget {
     );
   }
 }
+

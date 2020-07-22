@@ -65,3 +65,65 @@ class RoundedButton extends StatelessWidget {
     );
   }
 }
+
+class NewsCard extends StatelessWidget {
+  NewsCard({@required this.title, @required this.imageUrl, @required this.description, @required this.publishedAt, @required this.onTap});
+  final String title, description, publishedAt, imageUrl;
+  final Function onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Card(
+        elevation: 2,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              width: 150,
+              height: 150,
+              child: FadeInImage(
+                image: NetworkImage('$imageUrl'),
+                fit: BoxFit.cover,
+                placeholder: AssetImage('assets/images/news.png'),
+              ),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  width: MediaQuery.of(context).size.width - 200,
+                  child: Text(
+                    '$title',
+                    style: TextStyle(
+                        color: kSoftBlackColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: <Widget>[
+                      Chip(
+                        label: Text('$publishedAt', style: TextStyle(color: kWhiteColor, fontSize: 12, fontWeight: FontWeight.w500),),
+                        backgroundColor: kDarkBlueColor,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            )
+
+          ],
+        ),
+      ),
+    );
+  }
+}
