@@ -81,37 +81,40 @@ class _HomeState extends State<Home> {
               child: Row(
                 children: <Widget>[
                   Chip(
-                    label: Text('Popular'),
+                    label: Text('Business'),
                   ),
                   SizedBox(
                     width: 5,
                   ),
                   Chip(
-                    label: Text('Corona'),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Chip(
-                    label: Text('Technology'),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Chip(
-                    label: Text('Medical'),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Chip(
-                    label: Text('War'),
+                    label: Text('General'),
                   ),
                   SizedBox(
                     width: 5,
                   ),
                   Chip(
                     label: Text('Entertainment'),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Chip(
+                    label: Text('Health'),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Chip(
+                    label: Text('Science'),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Chip(
+                    label: Text('Sports'),
+                  ),
+                  Chip(
+                    label: Text('Technology'),
                   ),
                 ],
               ),

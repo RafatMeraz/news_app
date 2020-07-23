@@ -11,9 +11,24 @@ class NewsAPIServices {
   static String country = "us";
   static String language = "en";
 
+  // get all top headlines
   static Future<NewsModel> getTopHeadline() async{
     try {
-      var _response = await _client.get("https://newsapi.org/v2/top-headlines?country=$country&apiKey="+API_KEY);
+      var _response = await _client.get("$BASE_URL/top-headlines?country=$country&apiKey="+API_KEY);
+      if (_response.statusCode == 200){
+        return NewsModel.fromJson(jsonDecode(_response.body));
+      } else {
+        throw Exception('Something went wrong!');
+      }
+    } catch (_){
+      throw Exception('Something went wrong!');
+    }
+  }
+
+  // get news by search from every sources
+  static Future<NewsModel> getEveryThingSearchNews(String query) async {
+    try {
+      var _response = await _client.get("$BASE_URL/everything?q=$query&apiKey="+API_KEY);
       if (_response.statusCode == 200){
         return NewsModel.fromJson(jsonDecode(_response.body));
       } else {

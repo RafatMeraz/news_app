@@ -16,6 +16,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       } catch (error){
         yield HomeNewsErrorState();
       }
+    } else if (event is HomeSearchNewsByQueryEvent){
+      yield HomeNewsLoadingState();
+      try {
+        var _response = await repository.searchNews(event.query);
+        yield HomeNewsFetchedSuccessState(newsModel: _response);
+      } catch (error){
+        yield HomeNewsErrorState();
+      }
     }
   }
 
