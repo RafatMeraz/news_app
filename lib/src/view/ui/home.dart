@@ -18,6 +18,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String query;
 
   @override
   void initState() {
@@ -67,56 +68,111 @@ class _HomeState extends State<Home> {
         backgroundColor: kSoftGreenColor,
         actions: <Widget>[
           IconButton(
-            onPressed: (){ },
-            icon: Icon(Icons.search),
+            onPressed: (){
+
+            },
+            icon: Icon(Icons.filter_list),
           )
         ],
       ),
       body: Column(
         children: <Widget>[
+//          Container(
+//            margin: EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 6),
+//            child: SingleChildScrollView(
+//              scrollDirection: Axis.horizontal,
+//              child: Row(
+//                mainAxisAlignment: MainAxisAlignment.center,
+//                children: <Widget>[
+////                  Chip(
+////                    label: Text('Business'),
+////                  ),
+////                  SizedBox(
+////                    width: 5,
+////                  ),
+////                  Chip(
+////                    label: Text('General'),
+////                  ),
+////                  SizedBox(
+////                    width: 5,
+////                  ),
+////                  Chip(
+////                    label: Text('Entertainment'),
+////                  ),
+////                  SizedBox(
+////                    width: 5,
+////                  ),
+////                  Chip(
+////                    label: Text('Health'),
+////                  ),
+////                  SizedBox(
+////                    width: 5,
+////                  ),
+////                  Chip(
+////                    label: Text('Science'),
+////                  ),
+////                  SizedBox(
+////                    width: 5,
+////                  ),
+////                  Chip(
+////                    label: Text('Sports'),
+////                  ),
+////                  Chip(
+////                    label: Text('Technology'),
+////                  ),
+//                Container(
+//                  width: MediaQuery.of(context).size.width-32,
+//                  decoration: BoxDecoration(
+//                    borderRadius: BorderRadius.circular(50),
+//                    color: Colors.amber
+//                  ),
+//                  child: TextField(
+//                    decoration: InputDecoration(
+//                      border: InputBorder.none,
+//                      contentPadding: EdgeInsets.symmetric(
+//                        vertical: 10, horizontal: 20
+//                      )
+//                    ),
+//                  ),
+//                ),
+//                ],
+//              ),
+//            ),
+//          ),
           Container(
-            margin: EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 6),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: <Widget>[
-                  Chip(
-                    label: Text('Business'),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Chip(
-                    label: Text('General'),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Chip(
-                    label: Text('Entertainment'),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Chip(
-                    label: Text('Health'),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Chip(
-                    label: Text('Science'),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Chip(
-                    label: Text('Sports'),
-                  ),
-                  Chip(
-                    label: Text('Technology'),
-                  ),
-                ],
+            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Material(
+              elevation: 4,
+              borderRadius: BorderRadius.circular(50),
+              child: TextField(
+                onChanged: (text){
+                  this.query = text;
+                },
+                decoration: InputDecoration(
+                    hintText: 'Search news',
+                    suffixIcon: Material(
+                      elevation: 2,
+                      borderRadius: BorderRadius.circular(50),
+                      child: IconButton(
+                        icon: Icon(Icons.search,
+                        color: Colors.black87),
+                        onPressed: (){
+                         if (query.trim().length > 2) {
+                           BlocProvider.of<HomeBloc>(context).add(HomeSearchNewsByQueryEvent(query: this.query));
+                         } else {
+                           BotToast.showText(text: 'Must be more than 2 letters', contentColor: Colors.red, textStyle: TextStyle(color: kWhiteColor));
+                         }
+                        },
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: EdgeInsets.only(left: 30),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide.none
+                    )
+                ),
               ),
             ),
           ),
@@ -158,4 +214,5 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
 
