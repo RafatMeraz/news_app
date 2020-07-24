@@ -18,8 +18,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String query;
-
   @override
   void initState() {
     super.initState();
@@ -29,125 +27,70 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
+      body: SafeArea(
+        child: Column(
           children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: kDarkGreenColor
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Text('Top Headlines', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),),
+                      Row(
+                        children: <Widget>[
+                          Chip(label: Text('us'),),
+                          SizedBox(width: 10,),
+                          Chip(label: Text('entertainment'),),
+                        ],
+                      )
+                    ],
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.filter_list),
+                    onPressed: (){
+
+                    },
+                  )
+                ],
               ),
-              child: Text(
-                'News App',
-                style: TextStyle(
-                  color: kWhiteColor
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                child: BlocBuilder(
+                  bloc: BlocProvider.of<HomeBloc>(context),
+                  builder: (context, state){
+                    if (state is HomeNewsLoadingState){
+                      return Center(child: CircularProgressIndicator());
+                    } else if (state is HomeNewsErrorState){
+                      return Center(child: Text("Something went wring!"),);
+                    } else if (state is HomeNewsFetchedSuccessState){
+                      return ListView.builder(
+                          itemCount: state.newsModel.articles.length,
+                          itemBuilder: (context, index){
+                            return NewsCard(
+                              title: state.newsModel.articles[index].title,
+                              publishedAt: state.newsModel.articles[index].publishedAt,
+                              imageUrl: state.newsModel.articles[index].urlToImage,
+                              description: state.newsModel.articles[index].description,
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => NewsDetails(article: state.newsModel.articles[index])
+                                ));
+                              },
+                            );
+                          }
+                      );
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  },
                 ),
               ),
-            ),
-            ListTile(
-              leading: Icon(Icons.track_changes),
-              title: Text('Corona Tracker'),
-            ),
-            ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Sign Out'),
-              onTap: () async{
-                await FirebaseAuthService.userSignOut();
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) => SignIn()
-                ));
-              },
-            ),
+            )
           ],
         ),
-      ),
-      appBar: AppBar(
-        title: Text(
-          'News App'
-        ),
-        elevation: 0,
-        backgroundColor: kSoftGreenColor,
-        actions: <Widget>[
-          IconButton(
-            onPressed: (){
-
-            },
-            icon: Icon(Icons.filter_list),
-          )
-        ],
-      ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Material(
-              elevation: 4,
-              borderRadius: BorderRadius.circular(50),
-              child: TextField(
-                onChanged: (text){
-                  this.query = text;
-                },
-                decoration: InputDecoration(
-                    hintText: 'Search news',
-                    suffixIcon: Material(
-                      elevation: 2,
-                      borderRadius: BorderRadius.circular(50),
-                      child: IconButton(
-                        icon: Icon(Icons.search,
-                        color: Colors.black87),
-                        onPressed: (){
-                         if (query.trim().length > 2) {
-                           BlocProvider.of<HomeBloc>(context).add(HomeSearchNewsByQueryEvent(query: this.query));
-                         } else {
-                           BotToast.showText(text: 'Must be more than 2 letters', contentColor: Colors.red, textStyle: TextStyle(color: kWhiteColor));
-                         }
-                        },
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: EdgeInsets.only(left: 30),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide.none
-                    )
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              child: BlocBuilder(
-                bloc: BlocProvider.of<HomeBloc>(context),
-                builder: (context, state){
-                  if (state is HomeNewsLoadingState){
-                    return Center(child: CircularProgressIndicator());
-                  } else if (state is HomeNewsErrorState){
-                    return Center(child: Text("Something went wring!"),);
-                  } else if (state is HomeNewsFetchedSuccessState){
-                    return ListView.builder(
-                        itemCount: state.newsModel.articles.length,
-                        itemBuilder: (context, index){
-                          return NewsCard(
-                            title: state.newsModel.articles[index].title,
-                            publishedAt: state.newsModel.articles[index].publishedAt,
-                            imageUrl: state.newsModel.articles[index].urlToImage,
-                            description: state.newsModel.articles[index].description,
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => NewsDetails(article: state.newsModel.articles[index])
-                              ));
-                            },
-                          );
-                        }
-                    );
-                  }
-                  return Center(child: CircularProgressIndicator());
-                },
-              ),
-            ),
-          )
-        ],
       ),
     );
   }
