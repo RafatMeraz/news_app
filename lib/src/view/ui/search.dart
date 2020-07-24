@@ -1,11 +1,9 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/home/home_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/home/home_events.dart';
-import 'package:news_app/src/business_logic/blocs/home/home_states.dart';
-import 'package:news_app/src/services/firebase_services/auth_services.dart';
-import 'package:news_app/src/view/ui/signin.dart';
+import 'package:news_app/src/business_logic/blocs/search/search_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/search/search_events.dart';
+import 'package:news_app/src/business_logic/blocs/search/search_states.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 
@@ -22,7 +20,7 @@ class _SearchState extends State<Search> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<HomeBloc>(context).add(HomeGetAllHeadlineEvent());
+    BlocProvider.of<SearchBloc>(context).add(SearchGetAllHeadlineEvent());
   }
 
   @override
@@ -53,7 +51,7 @@ class _SearchState extends State<Search> {
                               color: Colors.black87),
                           onPressed: (){
                             if (query.trim().length > 2) {
-                              BlocProvider.of<HomeBloc>(context).add(HomeSearchNewsByQueryEvent(query: this.query));
+                              BlocProvider.of<SearchBloc>(context).add(SearchSearchNewsByQueryEvent(query: this.query));
                             } else {
                               BotToast.showText(text: 'Must be more than 2 letters', contentColor: Colors.red, textStyle: TextStyle(color: kWhiteColor));
                             }
@@ -75,13 +73,13 @@ class _SearchState extends State<Search> {
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 16),
                 child: BlocBuilder(
-                  bloc: BlocProvider.of<HomeBloc>(context),
+                  bloc: BlocProvider.of<SearchBloc>(context),
                   builder: (context, state){
-                    if (state is HomeNewsLoadingState){
+                    if (state is SearchNewsLoadingState){
                       return Center(child: CircularProgressIndicator());
-                    } else if (state is HomeNewsErrorState){
+                    } else if (state is SearchNewsErrorState){
                       return Center(child: Text("Something went wring!"),);
-                    } else if (state is HomeNewsFetchedSuccessState){
+                    } else if (state is SearchNewsFetchedSuccessState){
                       return ListView.builder(
                           itemCount: state.newsModel.articles.length,
                           itemBuilder: (context, index){

@@ -5,6 +5,8 @@ import 'package:news_app/src/business_logic/blocs/forgot_password/forgot_passwor
 import 'package:news_app/src/business_logic/blocs/forgot_password/forgot_password_states.dart';
 import 'package:news_app/src/business_logic/blocs/home/home_bloc.dart';
 import 'package:news_app/src/business_logic/blocs/home/home_states.dart';
+import 'package:news_app/src/business_logic/blocs/search/search_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/search/search_states.dart';
 import 'package:news_app/src/business_logic/blocs/signin/signin_bloc.dart';
 import 'package:news_app/src/business_logic/blocs/signin/signin_states.dart';
 import 'package:news_app/src/business_logic/blocs/signup/signup_bloc.dart';
@@ -24,6 +26,9 @@ void main() {
       ),
       BlocProvider<HomeBloc>(
         create: (BuildContext context) => HomeBloc(HomeInitialState()),
+      ),
+      BlocProvider<SearchBloc>(
+        create: (BuildContext context) => SearchBloc(SearchInitialState()),
       ),
     ],
     child: NewsApp(),
