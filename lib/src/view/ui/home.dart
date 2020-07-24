@@ -1,12 +1,11 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/src/business_logic/blocs/home/home_bloc.dart';
 import 'package:news_app/src/business_logic/blocs/home/home_events.dart';
 import 'package:news_app/src/business_logic/blocs/home/home_states.dart';
-import 'package:news_app/src/services/firebase_services/auth_services.dart';
-import 'package:news_app/src/view/ui/signin.dart';
+import 'package:news_app/src/services/news_api_services/news_api_services.dart';
+import 'package:news_app/src/view/ui/filter.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 
@@ -18,10 +17,34 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  var countryList = [];
+  var countryCodeList = [];
+
+
   @override
   void initState() {
     super.initState();
     BlocProvider.of<HomeBloc>(context).add(HomeGetAllHeadlineEvent());
+    // ignore: missing_return
+
+  }
+
+  Widget setupAlertDialoadContainer() {
+
+    return Container(
+      height: 300.0, // Change as per your requirement
+      width: 300.0, // Change as per your requirement
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: countryList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title: Text(countryCodeList[index]),
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -31,18 +54,20 @@ class _HomeState extends State<Home> {
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Top Headlines', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Chip(label: Text('us'),),
+                          Chip(label: Text(NewsAPIServices.country),),
                           SizedBox(width: 10,),
-                          Chip(label: Text('entertainment'),),
+                          Chip(label: Text(NewsAPIServices.category),),
                         ],
                       )
                     ],
@@ -50,7 +75,9 @@ class _HomeState extends State<Home> {
                   IconButton(
                     icon: Icon(Icons.filter_list),
                     onPressed: (){
-
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => Filter()
+                      ));
                     },
                   )
                 ],

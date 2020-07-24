@@ -10,11 +10,13 @@ class NewsAPIServices {
   static http.Client _client = http.Client();
   static String country = "us";
   static String language = "en";
+  static String category = "general";
+
 
   // get all top headlines
   static Future<NewsModel> getTopHeadline() async{
     try {
-      var _response = await _client.get("$BASE_URL/top-headlines?country=$country&apiKey="+API_KEY);
+      var _response = await _client.get("$BASE_URL/top-headlines?country=$country&category=$category&apiKey="+API_KEY);
       if (_response.statusCode == 200){
         return NewsModel.fromJson(jsonDecode(_response.body));
       } else {
