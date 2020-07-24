@@ -77,68 +77,6 @@ class _HomeState extends State<Home> {
       ),
       body: Column(
         children: <Widget>[
-//          Container(
-//            margin: EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 6),
-//            child: SingleChildScrollView(
-//              scrollDirection: Axis.horizontal,
-//              child: Row(
-//                mainAxisAlignment: MainAxisAlignment.center,
-//                children: <Widget>[
-////                  Chip(
-////                    label: Text('Business'),
-////                  ),
-////                  SizedBox(
-////                    width: 5,
-////                  ),
-////                  Chip(
-////                    label: Text('General'),
-////                  ),
-////                  SizedBox(
-////                    width: 5,
-////                  ),
-////                  Chip(
-////                    label: Text('Entertainment'),
-////                  ),
-////                  SizedBox(
-////                    width: 5,
-////                  ),
-////                  Chip(
-////                    label: Text('Health'),
-////                  ),
-////                  SizedBox(
-////                    width: 5,
-////                  ),
-////                  Chip(
-////                    label: Text('Science'),
-////                  ),
-////                  SizedBox(
-////                    width: 5,
-////                  ),
-////                  Chip(
-////                    label: Text('Sports'),
-////                  ),
-////                  Chip(
-////                    label: Text('Technology'),
-////                  ),
-//                Container(
-//                  width: MediaQuery.of(context).size.width-32,
-//                  decoration: BoxDecoration(
-//                    borderRadius: BorderRadius.circular(50),
-//                    color: Colors.amber
-//                  ),
-//                  child: TextField(
-//                    decoration: InputDecoration(
-//                      border: InputBorder.none,
-//                      contentPadding: EdgeInsets.symmetric(
-//                        vertical: 10, horizontal: 20
-//                      )
-//                    ),
-//                  ),
-//                ),
-//                ],
-//              ),
-//            ),
-//          ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Material(

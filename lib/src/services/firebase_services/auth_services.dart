@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/src/view/ui/bottom_navigation.dart';
 import 'package:news_app/src/view/ui/home.dart';
 import 'package:news_app/src/view/ui/signin.dart';
 
@@ -20,7 +21,7 @@ class FirebaseAuthService {
         stream: FirebaseAuth.instance.onAuthStateChanged,
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
-            return Home();
+            return BottomNavHome();
           } else {
             return SignIn();
           }
