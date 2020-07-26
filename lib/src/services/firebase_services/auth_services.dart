@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/src/models/user.dart';
 import 'package:news_app/src/view/ui/bottom_navigation.dart';
 import 'package:news_app/src/view/ui/home.dart';
 import 'package:news_app/src/view/ui/signin.dart';
@@ -14,6 +15,7 @@ class FirebaseAuthService {
   static FirebaseUser user;
   static String errorMessage;
   static bool userSignIn = false;
+  static User userData;
 
   // check user is logged on or not
   static checkUserAuthState() {
@@ -50,6 +52,18 @@ class FirebaseAuthService {
         'user_name': userName,
         'email': email,
         });
+      return true;
+    } catch (e){
+      errorMessage = e.toString();
+      return false;
+    }
+  }
+
+  static Future<bool> loadUserData()async{
+    try {
+      await _firestore.collection('users').document(user.uid).get().then((value) {
+        userData = User(email: value.data['email'], uid: value.data['uid'], name: value.data['user_name']);
+      });
       return true;
     } catch (e){
       errorMessage = e.toString();
