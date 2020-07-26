@@ -74,6 +74,19 @@ class FirebaseAuthService {
     }
   }
 
+  // change user name from firebase
+  static Future<bool> changeUserName(String name)async{
+    try {
+      await _firestore.collection("users").document(user.uid).updateData({
+        'user_name' : name
+      });
+      return true;
+    } catch (e){
+      errorMessage = e.toString();
+      return false;
+    }
+  }
+
   // Firebase sign in method
   static Future<bool> userSignInAuth(String email, String password) async {
     try {

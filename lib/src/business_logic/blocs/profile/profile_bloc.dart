@@ -22,6 +22,19 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       } catch (_){
         yield ProfileErrorState();
       }
+    } else if (event is ProfileChangeUsernameEvent){
+      yield ProfileLoadingState();
+      try{
+        var _response = await FirebaseAuthService.changeUserName(event.userName);
+        print('----------------------------- $_response -----------------------------');
+        if (_response){
+          yield ProfileUserNameChangedSuccessState();
+        } else {
+          yield ProfileFailedState();
+        }
+      } catch (_){
+        yield ProfileErrorState();
+      }
     }
   }
 

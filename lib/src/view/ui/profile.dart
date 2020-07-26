@@ -91,7 +91,7 @@ class _ProfileState extends State<Profile> {
                     title: Text('Change Username', style: TextStyle(fontWeight: FontWeight.w500)),
                     leading: Icon(Icons.person, color: kBlackColor),
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChangeUsername()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChangeUsername(user: FirebaseAuthService.userData,)));
                     },
                   ),
                   Divider(

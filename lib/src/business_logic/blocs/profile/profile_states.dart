@@ -11,6 +11,8 @@ class ProfileErrorState extends ProfileState {}
 
 class ProfileFailedState extends ProfileState {}
 
+class ProfileUserNameChangedSuccessState extends ProfileState {}
+
 class ProfileDataFetchedState extends ProfileState {
   final User user;
   ProfileDataFetchedState({@required this.user});

@@ -1,13 +1,23 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/profile/profile_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/profile/profile_events.dart';
+import 'package:news_app/src/business_logic/blocs/profile/profile_states.dart';
+import 'package:news_app/src/models/user.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 
 class ChangeUsername extends StatefulWidget {
+  final User user;
+  ChangeUsername({@required this.user});
   @override
-  _ChangeUsernameState createState() => _ChangeUsernameState();
+  _ChangeUsernameState createState() => _ChangeUsernameState(user: this.user);
 }
 
 class _ChangeUsernameState extends State<ChangeUsername> {
+  _ChangeUsernameState({@required this.user});
+  final User user;
   final TextEditingController _userNameController = TextEditingController();
 
   @override
@@ -42,7 +52,7 @@ class _ChangeUsernameState extends State<ChangeUsername> {
               ),
               Container(
                 alignment: Alignment.center,
-                child: Text('example@gmail.com', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, letterSpacing: 0.6)),
+                child: Text(user.email, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, letterSpacing: 0.6)),
               ),
               SizedBox(
                 height: 30,
@@ -64,13 +74,26 @@ class _ChangeUsernameState extends State<ChangeUsername> {
                           iconData: Icons.person
                       ),
                       SizedBox(height: 15,),
-                      RoundedButton(
-                        inProgress: false,
-                        onPressed: (){
-
+                      BlocBuilder(
+                        bloc: BlocProvider.of<ProfileBloc>(context),
+                        builder: (context, state){
+                          if (state is ProfileUserNameChangedSuccessState){
+                            BotToast.showText(text: 'Username changed!', contentColor: Colors.lightGreen, textStyle: TextStyle(color: Colors.white));
+                            BlocProvider.of<ProfileBloc>(context).add(ProfileFetchEvent());
+                          }
+                          return RoundedButton(
+                            inProgress: state is ProfileLoadingState,
+                            onPressed: (){
+                              if (_userNameController.text.trim().isNotEmpty) {
+                                BlocProvider.of<ProfileBloc>(context).add(ProfileChangeUsernameEvent(userName: _userNameController.text.trim()));
+                              } else {
+                                BotToast.showText(text: 'Enter a valid username!', contentColor: Colors.red, textStyle: TextStyle(color: Colors.white));
+                              }
+                            },
+                            buttonText: 'Save Changes',
+                            disable: false,
+                          );
                         },
-                        buttonText: 'Save Changes',
-                        disable: false,
                       )
                     ],
                   ),
