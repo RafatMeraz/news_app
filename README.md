@@ -11,6 +11,7 @@ This a mobile application that will show the news of the current world. Users ca
   - Source domain name
   - Source name
   - Language
+
 I am also adding the recent Corona update section. In this feature users can see the current number of Corona affected, deaths & Recovered patients. Users can Sign In or Sign Up with an easy approach.
 
 ## Technology
