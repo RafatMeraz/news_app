@@ -59,10 +59,11 @@ class FirebaseAuthService {
     }
   }
 
+  // get user data from  firebase
   static Future<bool> loadUserData()async{
     try {
-      await _firestore.collection('users').document(user.uid).get().then((value) {
-        userData = User(email: value.data['email'], uid: value.data['uid'], name: value.data['user_name']);
+      await _firestore.collection("users").document(user.uid).get().then((value){
+        userData = User(email: user.email, uid: user.uid, name: value.data['user_name']);
       });
       return true;
     } catch (e){
@@ -71,7 +72,6 @@ class FirebaseAuthService {
     }
   }
 
-  
   // Firebase sign in method
   static Future<bool> userSignInAuth(String email, String password) async {
     try {

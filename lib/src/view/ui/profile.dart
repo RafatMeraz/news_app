@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/profile/profile_bloc.dart';
+import 'package:news_app/src/business_logic/blocs/profile/profile_events.dart';
+import 'package:news_app/src/business_logic/blocs/profile/profile_states.dart';
 import 'package:news_app/src/view/ui/change_password.dart';
 import 'package:news_app/src/view/ui/change_username.dart';
 import 'package:news_app/src/view/utils/constants.dart';
@@ -9,6 +13,13 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<ProfileBloc>(context).add(ProfileFetchEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,15 +46,36 @@ class _ProfileState extends State<Profile> {
               height: 10,
             ),
             Container(
-              alignment: Alignment.center,
-              child: Text('Username', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.6)),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Text('example@gmail.com', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, letterSpacing: 0.6)),
+              width: MediaQuery.of(context).size.width,
+              child: BlocBuilder(
+                bloc: BlocProvider.of<ProfileBloc>(context),
+                builder: (context, state){
+                  if (state is ProfileDataFetchedState){
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text('${state.user.name}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.6)),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text('${state.user.email}', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, letterSpacing: 0.6)),
+                      ],
+                    );
+                  } else {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text('Username', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.6)),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text('example@gmail.com', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, letterSpacing: 0.6)),
+                      ],
+                    );
+                  }
+
+                },
+              ),
             ),
             SizedBox(
               height: 16,

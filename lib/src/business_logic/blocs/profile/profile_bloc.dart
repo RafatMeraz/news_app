@@ -13,6 +13,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       yield ProfileLoadingState();
       try{
         var _response = await FirebaseAuthService.loadUserData();
+        print('----------------------------- $_response -----------------------------');
         if (_response){
           yield ProfileDataFetchedState(user: FirebaseAuthService.userData);
         } else {

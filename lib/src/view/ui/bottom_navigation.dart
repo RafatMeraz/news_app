@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/src/services/firebase_services/auth_services.dart';
 import 'package:news_app/src/view/ui/home.dart';
 import 'package:news_app/src/view/ui/profile.dart';
 import 'package:news_app/src/view/ui/search.dart';
@@ -16,6 +18,16 @@ class _BottomNavHomeState extends State<BottomNavHome> {
     Profile()
   ];
   int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
+  getUser() async{
+    FirebaseAuthService.user = await FirebaseAuth.instance.currentUser();
+  }
 
   @override
   Widget build(BuildContext context) {
