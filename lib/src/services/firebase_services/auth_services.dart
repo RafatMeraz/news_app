@@ -30,6 +30,7 @@ class FirebaseAuthService {
         });
   }
 
+  // create a new user
   static Future<bool> createNewUser(String email, password)async{
     try {
       var _authResult = await _firebaseAuth.createUserWithEmailAndPassword(
@@ -45,6 +46,7 @@ class FirebaseAuthService {
     }
   }
 
+  // upload user data to firebase
   static Future<bool> uploadUserData(String email, String uid, String userName)async{
     try {
       await _firestore.collection('users').document(uid).setData({

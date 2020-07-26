@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/src/business_logic/blocs/profile/profile_bloc.dart';
 import 'package:news_app/src/business_logic/blocs/profile/profile_events.dart';
 import 'package:news_app/src/business_logic/blocs/profile/profile_states.dart';
+import 'package:news_app/src/services/firebase_services/auth_services.dart';
 import 'package:news_app/src/view/ui/change_password.dart';
 import 'package:news_app/src/view/ui/change_username.dart';
+import 'package:news_app/src/view/ui/signin.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 
 class Profile extends StatefulWidget {
@@ -90,7 +92,6 @@ class _ProfileState extends State<Profile> {
                     leading: Icon(Icons.person, color: kBlackColor),
                     onTap: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context) => ChangeUsername()));
-
                     },
                   ),
                   Divider(
@@ -117,8 +118,9 @@ class _ProfileState extends State<Profile> {
                   ListTile(
                     title: Text('Sign Out', style: TextStyle(fontWeight: FontWeight.w500)),
                     leading: Icon(Icons.exit_to_app, color: kBlackColor),
-                    onTap: (){
-
+                    onTap: () async{
+                      await FirebaseAuthService.userSignOut();
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignIn()));
                     },
                   ),
                 ],
