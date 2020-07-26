@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
                     if (state is HomeNewsLoadingState){
                       return Center(child: CircularProgressIndicator());
                     } else if (state is HomeNewsErrorState){
-                      return Center(child: Text("Something went wring!"),);
+                      return Center(child: Text("Something went wrong!"),);
                     } else if (state is HomeNewsFetchedSuccessState){
                       return ListView.builder(
                           itemCount: state.newsModel.articles.length,
