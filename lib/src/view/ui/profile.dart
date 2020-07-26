@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/src/view/ui/change_username.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 
 class Profile extends StatefulWidget {
@@ -55,6 +56,7 @@ class _ProfileState extends State<Profile> {
                     title: Text('Change Username', style: TextStyle(fontWeight: FontWeight.w500)),
                     leading: Icon(Icons.person, color: kBlackColor),
                     onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChangeUsername()));
 
                     },
                   ),
@@ -64,7 +66,7 @@ class _ProfileState extends State<Profile> {
                     title: Text('Change Password', style: TextStyle(fontWeight: FontWeight.w500)),
                     leading: Icon(Icons.lock, color: kBlackColor),
                     onTap: (){
-
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChangeUsername()));
                     },
                   ),
                 ],
