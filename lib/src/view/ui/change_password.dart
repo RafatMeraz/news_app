@@ -3,12 +3,17 @@ import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 
 class ChangePassword extends StatefulWidget {
+  ChangePassword({@required this.email});
+  final String email;
   @override
-  _ChangePasswordState createState() => _ChangePasswordState();
+  _ChangePasswordState createState() => _ChangePasswordState(email: email);
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
-  final TextEditingController _userNameController = TextEditingController();
+  _ChangePasswordState({@required this.email});
+  final String email;
+  final TextEditingController _currentPasswordController = TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +64,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                           forgotFunction: null,
                           textInputType: TextInputType.text,
                           hint: 'Current Password',
-                          obscureText: false,
-                          textEditingController: _userNameController,
+                          obscureText: true,
+                          textEditingController: _currentPasswordController,
                           iconData: Icons.person
                       ),
                       SizedBox(height: 10,),
@@ -69,8 +74,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                           forgotFunction: null,
                           textInputType: TextInputType.text,
                           hint: 'New Password',
-                          obscureText: false,
-                          textEditingController: _userNameController,
+                          obscureText: true,
+                          textEditingController: _newPasswordController,
                           iconData: Icons.person
                       ),
                       SizedBox(height: 15,),

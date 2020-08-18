@@ -15,7 +15,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
   @override
   void initState() {
     super.initState();
@@ -100,7 +99,7 @@ class _ProfileState extends State<Profile> {
                     title: Text('Change Password', style: TextStyle(fontWeight: FontWeight.w500)),
                     leading: Icon(Icons.lock, color: kBlackColor),
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChangePassword()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChangePassword(email: 'Example@gmail.com')));
                     },
                   ),
                 ],
