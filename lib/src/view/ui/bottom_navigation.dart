@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/src/services/firebase_services/auth_services.dart';
+import 'package:news_app/src/view/ui/corona_meter.dart';
 import 'package:news_app/src/view/ui/home.dart';
 import 'package:news_app/src/view/ui/profile.dart';
 import 'package:news_app/src/view/ui/search.dart';
+
+import '../utils/constants.dart';
 
 class BottomNavHome extends StatefulWidget {
   @override
@@ -15,6 +18,7 @@ class _BottomNavHomeState extends State<BottomNavHome> {
   var screens = [
     Home(),
     Search(),
+    CoronaMeter(),
     Profile()
   ];
   int selectedIndex = 0;
@@ -34,6 +38,8 @@ class _BottomNavHomeState extends State<BottomNavHome> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
+        selectedItemColor: kDarkBlueColor,
+        unselectedItemColor: kBlackColor,
         onTap: (index){
           setState(() {
             selectedIndex = index;
@@ -47,6 +53,10 @@ class _BottomNavHomeState extends State<BottomNavHome> {
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             title: Text('Search'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.ac_unit),
+            title: Text('Meter'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:news_app/src/models/all_data_model.dart';
 import 'package:news_app/src/models/news_model.dart';
 import 'package:http/http.dart' as http;
 
 const BASE_URL = "https://newsapi.org/v2/";
 const API_KEY = "62bb1d14ea3d45f78157cd5af17dc9e5";
+const CORONA_BASA_URL = 'https://www.disease.sh/v3/covid-19/';
 
 class NewsAPIServices {
   static http.Client _client = http.Client();
@@ -38,6 +40,19 @@ class NewsAPIServices {
       }
     } catch (_){
       throw Exception('Something went wrong!');
+    }
+  }
+
+  // get all data from api
+  static Future<AllData> getAllData() async {
+    try {
+      var _response = await _client.get(CORONA_BASA_URL+'all');
+      if (_response.statusCode == 200) {
+        final decodedJson = jsonDecode(_response.body);
+        return AllData(cases: decodedJson['cases'], deaths: decodedJson['deaths'], recovered: decodedJson['recovered'], active: decodedJson['active']);
+      }
+    } catch (error) {
+      throw Exception(error.toString());
     }
   }
 }
