@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/home/home_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/home/home_events.dart';
-import 'package:news_app/src/services/news_api_services/news_api_services.dart';
+import 'package:news_app/src/business_logic/services/news_api_services/news_api_services.dart';
+import 'package:news_app/src/view/blocs/home/home_bloc.dart';
+import 'package:news_app/src/view/blocs/home/home_events.dart';
 import '../utils/constants.dart';
 
 class Filter extends StatefulWidget {

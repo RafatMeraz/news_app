@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/home/home_events.dart';
-import 'package:news_app/src/business_logic/blocs/home/home_states.dart';
-import 'package:news_app/src/services/repository.dart';
+import 'package:news_app/src/business_logic/services/repository.dart';
+
+import 'home_events.dart';
+import 'home_states.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(HomeState initialState) : super(initialState);

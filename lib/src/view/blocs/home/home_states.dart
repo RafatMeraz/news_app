@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:news_app/src/models/news_model.dart';
+import 'package:news_app/src/business_logic/models/news_model.dart';
 
 abstract class HomeState {}
 

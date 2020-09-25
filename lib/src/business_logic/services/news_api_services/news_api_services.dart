@@ -1,8 +1,7 @@
 import 'dart:convert';
-
-import 'package:news_app/src/models/all_data_model.dart';
-import 'package:news_app/src/models/news_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:news_app/src/business_logic/models/all_data_model.dart';
+import 'package:news_app/src/business_logic/models/news_model.dart';
 
 const BASE_URL = "https://newsapi.org/v2/";
 const API_KEY = "62bb1d14ea3d45f78157cd5af17dc9e5";

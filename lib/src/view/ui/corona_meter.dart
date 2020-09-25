@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:news_app/src/models/all_data_model.dart';
-
-import '../../services/repository.dart';
+import 'package:news_app/src/business_logic/models/all_data_model.dart';
+import 'package:news_app/src/business_logic/services/repository.dart';
 import '../utils/constants.dart';
 
 class CoronaMeter extends StatefulWidget {

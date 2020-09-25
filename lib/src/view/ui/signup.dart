@@ -2,14 +2,13 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/signup/signup_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/signup/signup_events.dart';
-import 'package:news_app/src/business_logic/blocs/signup/signup_states.dart';
-import 'package:news_app/src/services/firebase_services/auth_services.dart';
+import 'package:news_app/src/business_logic/services/firebase_services/auth_services.dart';
+import 'package:news_app/src/view/blocs/signup/signup_bloc.dart';
+import 'package:news_app/src/view/blocs/signup/signup_events.dart';
+import 'package:news_app/src/view/blocs/signup/signup_states.dart';
 import 'package:news_app/src/view/ui/home.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
-import 'package:toast/toast.dart';
 
 class SignUp extends StatefulWidget {
   @override

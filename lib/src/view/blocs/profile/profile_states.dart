@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:news_app/src/models/user.dart';
+import 'package:news_app/src/business_logic/models/user.dart';
 
 abstract class ProfileState {}
 

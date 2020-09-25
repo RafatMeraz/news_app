@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/src/models/user.dart';
+import 'package:news_app/src/business_logic/models/user.dart';
 import 'package:news_app/src/view/ui/bottom_navigation.dart';
 import 'package:news_app/src/view/ui/home.dart';
 import 'package:news_app/src/view/ui/signin.dart';

@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/home/home_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/home/home_events.dart';
-import 'package:news_app/src/business_logic/blocs/home/home_states.dart';
-import 'package:news_app/src/services/news_api_services/news_api_services.dart';
+import 'package:news_app/src/business_logic/services/news_api_services/news_api_services.dart';
+import 'package:news_app/src/view/blocs/home/home_bloc.dart';
+import 'package:news_app/src/view/blocs/home/home_events.dart';
+import 'package:news_app/src/view/blocs/home/home_states.dart';
 import 'package:news_app/src/view/ui/filter.dart';
-import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 
 import 'news_details.dart';

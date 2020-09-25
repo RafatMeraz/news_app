@@ -1,7 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:news_app/src/models/news_model.dart';
+import 'package:news_app/src/business_logic/models/news_model.dart';
 import 'package:news_app/src/view/ui/webview_screen.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 

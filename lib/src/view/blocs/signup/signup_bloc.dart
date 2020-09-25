@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/signup/signup_events.dart';
-import 'package:news_app/src/business_logic/blocs/signup/signup_states.dart';
-import 'package:news_app/src/services/firebase_services/auth_services.dart';
+import 'package:news_app/src/business_logic/services/firebase_services/auth_services.dart';
+import 'package:news_app/src/view/blocs/signup/signup_events.dart';
+import 'package:news_app/src/view/blocs/signup/signup_states.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState>{
   SignUpBloc(SignUpState initialState) : super(initialState);

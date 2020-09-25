@@ -1,10 +1,10 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/profile/profile_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/profile/profile_events.dart';
-import 'package:news_app/src/business_logic/blocs/profile/profile_states.dart';
-import 'package:news_app/src/models/user.dart';
+import 'package:news_app/src/business_logic/models/user.dart';
+import 'package:news_app/src/view/blocs/profile/profile_bloc.dart';
+import 'package:news_app/src/view/blocs/profile/profile_events.dart';
+import 'package:news_app/src/view/blocs/profile/profile_states.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 

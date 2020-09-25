@@ -1,9 +1,9 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/forgot_password/forgot_password_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/forgot_password/forgot_password_events.dart';
-import 'package:news_app/src/business_logic/blocs/forgot_password/forgot_password_states.dart';
+import 'package:news_app/src/view/blocs/forgot_password/forgot_password_bloc.dart';
+import 'package:news_app/src/view/blocs/forgot_password/forgot_password_events.dart';
+import 'package:news_app/src/view/blocs/forgot_password/forgot_password_states.dart';
 import 'package:news_app/src/view/utils/constants.dart';
 import 'package:news_app/src/view/utils/reuseable_widgets.dart';
 

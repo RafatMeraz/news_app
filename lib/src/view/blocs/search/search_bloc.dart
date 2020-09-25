@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/search/search_events.dart';
-import 'package:news_app/src/business_logic/blocs/search/search_states.dart';
-import 'package:news_app/src/services/repository.dart';
+import 'package:news_app/src/business_logic/services/repository.dart';
+import 'package:news_app/src/view/blocs/search/search_events.dart';
+import 'package:news_app/src/view/blocs/search/search_states.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc(SearchState initialState) : super(initialState);

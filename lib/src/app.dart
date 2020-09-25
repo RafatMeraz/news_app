@@ -1,7 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/src/services/firebase_services/auth_services.dart';
-import 'package:news_app/src/view/ui/signin.dart';
+import 'business_logic/services/firebase_services/auth_services.dart';
 
 class NewsApp extends StatelessWidget {
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/profile/profile_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/profile/profile_events.dart';
-import 'package:news_app/src/business_logic/blocs/profile/profile_states.dart';
-import 'package:news_app/src/services/firebase_services/auth_services.dart';
+import 'package:news_app/src/business_logic/services/firebase_services/auth_services.dart';
+import 'package:news_app/src/view/blocs/profile/profile_bloc.dart';
+import 'package:news_app/src/view/blocs/profile/profile_events.dart';
+import 'package:news_app/src/view/blocs/profile/profile_states.dart';
 import 'package:news_app/src/view/ui/change_password.dart';
 import 'package:news_app/src/view/ui/change_username.dart';
 import 'package:news_app/src/view/ui/signin.dart';

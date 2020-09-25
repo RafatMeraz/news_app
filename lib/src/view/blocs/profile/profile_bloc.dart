@@ -1,8 +1,7 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/src/business_logic/blocs/profile/profile_events.dart';
-import 'package:news_app/src/business_logic/blocs/profile/profile_states.dart';
-import 'package:news_app/src/services/firebase_services/auth_services.dart';
+import 'package:news_app/src/business_logic/services/firebase_services/auth_services.dart';
+import 'package:news_app/src/view/blocs/profile/profile_events.dart';
+import 'package:news_app/src/view/blocs/profile/profile_states.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc(ProfileState initialState) : super(initialState);

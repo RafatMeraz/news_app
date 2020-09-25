@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/src/services/firebase_services/auth_services.dart';
+import 'package:news_app/src/business_logic/services/firebase_services/auth_services.dart';
 import 'package:news_app/src/view/ui/corona_meter.dart';
 import 'package:news_app/src/view/ui/home.dart';
 import 'package:news_app/src/view/ui/profile.dart';
