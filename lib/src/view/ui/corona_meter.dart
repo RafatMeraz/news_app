@@ -5,6 +5,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:news_app/src/business_logic/models/all_data_model.dart';
 import 'package:news_app/src/business_logic/models/corona_country_data_model.dart';
 import 'package:news_app/src/business_logic/services/repository.dart';
+import 'package:news_app/src/view/ui/single_country.dart';
 import '../utils/constants.dart';
 
 class CoronaMeter extends StatefulWidget {
@@ -47,6 +48,11 @@ class _CoronaMeterState extends State<CoronaMeter> {
           tests: res['tests'],
           active: res['active'],
           critical: res['critical'],
+        activePerOneMillion: res['activePerOneMillion'] + 0.0,
+        casesPerOneMillion: res['casesPerOneMillion']+0.0,
+        deathsPerOneMillion: res['deathsPerOneMillion']+0.0,
+        testsPerOneMillion: res['testsPerOneMillion']+0.0,
+        recoveredPerOneMillion: res['recoveredPerOneMillion']+0.0,
       );
       _countries.add(country);
     }
@@ -242,7 +248,9 @@ class _CoronaMeterState extends State<CoronaMeter> {
                             itemBuilder: (context, index) {
                               return Card(
                                 child: ListTile(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => SingleCountry(country: _countriesData[index])));
+                                  },
                                   leading: Image.network(
                                     '${_countriesData[index].countryInfo.flag}',
                                     width: 50,
