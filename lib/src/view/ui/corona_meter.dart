@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:news_app/src/business_logic/models/all_data_model.dart';
+import 'package:news_app/src/business_logic/models/corona_country_data_model.dart';
 import 'package:news_app/src/business_logic/services/repository.dart';
 import '../utils/constants.dart';
 
@@ -13,37 +14,60 @@ class CoronaMeter extends StatefulWidget {
 
 class _CoronaMeterState extends State<CoronaMeter> {
   AllData allData;
-  bool inProgress =  false;
-  
+  bool inProgress = false;
+  List<CountryDataModel> _countries = [];
+  List<CountryDataModel> _countriesData = [];
+
   @override
   void initState() {
     super.initState();
     allData = AllData();
     getAllData();
   }
-  
-  getAllData() async{
+
+  getAllData() async {
     setState(() {
       inProgress = true;
     });
+    _countries.clear();
     allData = await repository.getAllData();
+    final _response = await repository.getAllCountryData();
+    for (var res in _response) {
+      CountryDataModel country = CountryDataModel(
+          country: res['country'],
+          countryInfo: CountryInfo(
+            flag: res['countryInfo']['flag'],
+          ),
+          cases: res['cases'],
+          todayCases: res['todayCases'],
+          deaths: res['deaths'],
+          todayDeaths: res['todayDeaths'],
+          todayRecovered: res['todayRecovered'],
+          recovered: res['recovered'],
+          tests: res['tests'],
+          active: res['active'],
+          critical: res['critical'],
+      );
+      _countries.add(country);
+    }
     setState(() {
+      _countriesData = _countries;
       inProgress = false;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kDarkBlueColor,
-      body: ModalProgressHUD(
-        inAsyncCall: inProgress,
-        color: kDarkBlueColor,
-        child: SafeArea(
-          child: Column(
+        backgroundColor: kDarkBlueColor,
+        body: ModalProgressHUD(
+          inAsyncCall: inProgress,
+          color: kDarkBlueColor,
+          child: SafeArea(
+              child: Column(
             children: <Widget>[
               Container(
-                height: 90,
+                height: 65,
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -54,14 +78,16 @@ class _CoronaMeterState extends State<CoronaMeter> {
                       Text(
                         'Corona Meter',
                         style: GoogleFonts.roboto(
-                          fontSize: 24,
-                          color: kWhiteColor,
-                          fontWeight: FontWeight.w400
-                        ),
+                            fontSize: 18,
+                            color: kWhiteColor,
+                            fontWeight: FontWeight.bold),
                       ),
                       IconButton(
-                        icon: Icon(Icons.refresh, color: kWhiteColor,),
-                        onPressed: (){
+                        icon: Icon(
+                          Icons.refresh,
+                          color: kWhiteColor,
+                        ),
+                        onPressed: () {
                           getAllData();
                         },
                       )
@@ -72,7 +98,7 @@ class _CoronaMeterState extends State<CoronaMeter> {
               ClipRRect(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(25)),
                 child: Container(
-                  height: MediaQuery.of(context).size.height-178,
+                  height: MediaQuery.of(context).size.height - 152.7,
                   width: MediaQuery.of(context).size.width,
                   color: kWhiteColor,
                   child: Column(
@@ -86,56 +112,120 @@ class _CoronaMeterState extends State<CoronaMeter> {
                             children: <Widget>[
                               Card(
                                 elevation: 3,
-                                child: Padding(
+                                child: Container(
+                                  width: 150,
                                   padding: const EdgeInsets.all(12.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: <Widget>[
-                                      Text('CASES', style: TextStyle(fontSize: 14, color: kDarkBlueColor)),
-                                      Divider(color: kBlackColor, endIndent: 8, indent: 8),
-                                      Text(allData.cases == null ? '00' : '${allData.cases}', style: TextStyle(fontSize: 18, color: kBlackColor, fontWeight: FontWeight.w700))
+                                      Text('CASES',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: kDarkBlueColor)),
+                                      Divider(
+                                          color: kBlackColor,
+                                          endIndent: 8,
+                                          indent: 8),
+                                      Text(
+                                          allData.cases == null
+                                              ? '00'
+                                              : '${allData.cases}',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: kBlackColor,
+                                              fontWeight: FontWeight.w700))
                                     ],
                                   ),
                                 ),
                               ),
                               Card(
                                 elevation: 3,
-                                child: Padding(
+                                child: Container(
+                                  width: 150,
                                   padding: const EdgeInsets.all(12.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text('DEATHS', style: TextStyle(fontSize: 14, color: kDarkBlueColor)),
-                                      Divider(color: kBlackColor, endIndent: 8, indent: 8),
-                                      Text(allData.deaths == null ? '00' :'${allData.deaths}', style: TextStyle(fontSize: 18, color: kBlackColor, fontWeight: FontWeight.w700))
+                                      Text('DEATHS',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: kDarkBlueColor)),
+                                      Divider(
+                                          color: kBlackColor,
+                                          endIndent: 8,
+                                          indent: 8),
+                                      Text(
+                                          allData.deaths == null
+                                              ? '00'
+                                              : '${allData.deaths}',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: kBlackColor,
+                                              fontWeight: FontWeight.w700))
                                     ],
                                   ),
                                 ),
                               ),
                               Card(
                                 elevation: 3,
-                                child: Padding(
+                                child: Container(
+                                  width: 150,
                                   padding: const EdgeInsets.all(12.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text('ACTIVE', style: TextStyle(fontSize: 14, color: kDarkBlueColor)),
-                                      Divider(color: kBlackColor, endIndent: 8, indent: 8),
-                                      Text(allData.active == null ? '00' :'${allData.active}', style: TextStyle(fontSize: 18, color: kBlackColor, fontWeight: FontWeight.w700))
+                                      Text('ACTIVE',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: kDarkBlueColor)),
+                                      Divider(
+                                          color: kBlackColor,
+                                          endIndent: 8,
+                                          indent: 8),
+                                      Text(
+                                          allData.active == null
+                                              ? '00'
+                                              : '${allData.active}',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: kBlackColor,
+                                              fontWeight: FontWeight.w700))
                                     ],
                                   ),
                                 ),
                               ),
                               Card(
                                 elevation: 3,
-                                child: Padding(
+                                child: Container(
                                   padding: const EdgeInsets.all(12.0),
+                                  width: 150,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text('RECOVERED', style: TextStyle(fontSize: 14, color: kDarkBlueColor)),
-                                      Divider(color: kBlackColor, endIndent: 8, indent: 8),
-                                      Text(allData.recovered == null ? '00' :'${allData.recovered}', style: TextStyle(fontSize: 18, color: kBlackColor, fontWeight: FontWeight.w700))
+                                      Text('RECOVERED',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: kDarkBlueColor)),
+                                      Divider(
+                                          color: kBlackColor,
+                                          endIndent: 8,
+                                          indent: 8),
+                                      Text(
+                                          allData.recovered == null
+                                              ? '00'
+                                              : '${allData.recovered}',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: kBlackColor,
+                                              fontWeight: FontWeight.w700))
                                     ],
                                   ),
                                 ),
@@ -144,15 +234,35 @@ class _CoronaMeterState extends State<CoronaMeter> {
                           ),
                         ),
                       ),
-
+                      SizedBox(height: 5),
+                      Expanded(
+                        child: Container(
+                          child: ListView.builder(
+                            itemCount: _countriesData.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: ListTile(
+                                  onTap: () {},
+                                  leading: Image.network(
+                                    '${_countriesData[index].countryInfo.flag}',
+                                    width: 50,
+                                  ),
+                                  title:
+                                      Text('${_countriesData[index].country}'),
+                                  subtitle: Text(
+                                      'Cases : ${_countriesData[index].cases}\nDeaths : ${_countriesData[index].deaths}\nRecovered : ${_countriesData[index].recovered}  '),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
               )
             ],
-          )
-        ),
-      )
-    );
+          )),
+        ));
   }
 }
