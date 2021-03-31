@@ -5,6 +5,7 @@ import 'package:news_app/src/view/ui/corona_meter.dart';
 import 'package:news_app/src/view/ui/home.dart';
 import 'package:news_app/src/view/ui/profile.dart';
 import 'package:news_app/src/view/ui/search.dart';
+import 'package:news_app/src/view/ui/web_scrapting.dart';
 
 import '../utils/constants.dart';
 
@@ -19,7 +20,8 @@ class _BottomNavHomeState extends State<BottomNavHome> {
     Home(),
     Search(),
     CoronaMeter(),
-    Profile()
+    WebScraperApp(),
+    Profile(),
   ];
   int selectedIndex = 0;
 
@@ -57,6 +59,10 @@ class _BottomNavHomeState extends State<BottomNavHome> {
           BottomNavigationBarItem(
             icon: Icon(Icons.ac_unit),
             title: Text('Meter'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt),
+            title: Text('Bangla News'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
